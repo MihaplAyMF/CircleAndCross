@@ -10,7 +10,7 @@
 #include "define.h"
 
 HINSTANCE hInstance_app;
-bool move = 0;
+bool move = false;
 Button gameBoard(SIZE);
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

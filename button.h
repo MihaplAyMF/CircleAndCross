@@ -14,7 +14,7 @@ class Button {
 
 public:
 
-	enum GameResult {
+	enum class GameResult {
 		CrossWin,
 		CircleWin,
 		Draw
@@ -24,12 +24,13 @@ public:
 
 	void MainWndAddWudgets(HWND hwnd);
 	Cell(*GetGrid())[SIZE];
+	GameResult GetState();
 	GameResult GetGameResult();
 
 private:
 
 	int size;
-	GameResult state = Draw;
+	GameResult state = GameResult::Draw;
 	Cell grid[SIZE][SIZE];
 
 };

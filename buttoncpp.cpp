@@ -1,9 +1,7 @@
 #include "button.h"
 
-
 int HasInHorizontalOrVerticalLine(Cell field[SIZE][SIZE], int crossOrCircle);
 int HasInDiagonalLine(Cell field[SIZE][SIZE], int res, int crossOrCircle);
-
 
 enum class Mark {
     Empty, Cross, Circle
@@ -36,6 +34,9 @@ Cell(*Button::GetGrid())[SIZE] {
     return grid;
 }
 
+Button::GameResult Button::GetState(){
+    return state;
+}
 
 Button::GameResult Button::GetGameResult() {
 
@@ -48,12 +49,14 @@ Button::GameResult Button::GetGameResult() {
     circle = HasInDiagonalLine(field, circle, 2);
 
     if (cross == 3 && circle == 0) {
-        return Button::GameResult::CrossWin;
+        state = Button::GameResult::CrossWin;
     } else if (circle == 3 && cross == 0) {
-        return Button::GameResult::CircleWin;
+        state = Button::GameResult::CircleWin;
     } else {
-        return Button::GameResult::Draw;
+        state = Button::GameResult::Draw;
     }
+
+    return state;
 }
 
 int HasInHorizontalOrVerticalLine(Cell field[SIZE][SIZE], int crossOrCircle) {

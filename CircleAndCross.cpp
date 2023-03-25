@@ -87,10 +87,12 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
             break;
         case WM_COMMAND:
 
+            if (gameBoard.GetState() != Button::GameResult::Draw) break;
+            
             for (int i = 0; i < SIZE; i++) {
                 for (int j = 0; j < SIZE; j++) {
                     Cell& cell = gameBoard.GetGrid()[i][j];
-                    if (cell.id == wParam && !cell.press) {
+                    if (cell.id == wParam && !cell.press && gameBoard.GetState() == Button::GameResult::Draw) {
                         move == 0 ? gameBoard.GetGrid()[i][j].num = 1 : gameBoard.GetGrid()[i][j].num = 2;
                         SetWindowTextA(cell.but, move == 0 ? "X" : "O");
                         cell.press = true;
@@ -99,10 +101,14 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
                 }
             }
 
-            if (gameBoard.GetGameResult() == Button::CrossWin) {
+            gameBoard.GetGameResult();
+
+            if (gameBoard.GetState() == Button::GameResult::CrossWin && gameBoard.GetState() != Button::GameResult::Draw) {
                 MessageBoxA(NULL, "Перемогли хрестики", "Хто ж виграв?", MB_OK); PostQuitMessage(0);
-            } else if (gameBoard.GetGameResult() == Button::CircleWin) {
+               
+            } else if (gameBoard.GetState() == Button::GameResult::CircleWin && gameBoard.GetState() != Button::GameResult::Draw) {
                 MessageBoxA(NULL, "Перемогли нолики", "Хто ж виграв?", MB_OK);  PostQuitMessage(0);
+               
             }
 
             break;
